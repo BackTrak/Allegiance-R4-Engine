@@ -124,6 +124,7 @@
       <Filter>7z</Filter>
     </ClInclude>
     <ClInclude Include="..\src\zlib\ZDirectory.h" />
+    <ClInclude Include="..\src\zlib\DX7Defs.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="7z">

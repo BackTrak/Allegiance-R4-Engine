@@ -487,6 +487,7 @@
     <ClInclude Include="..\src\zlib\cast.h" />
     <ClInclude Include="..\src\zlib\color.h" />
     <ClInclude Include="..\src\zlib\comobj.h" />
+    <ClInclude Include="..\src\zlib\DX7Defs.h" />
     <ClInclude Include="..\src\zlib\event.h" />
     <ClInclude Include="..\src\zlib\fixdelete.h" />
     <ClInclude Include="..\src\zlib\FTPSession.h" />

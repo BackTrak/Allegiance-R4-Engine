@@ -567,7 +567,9 @@ public:
             {
                 m_pbuttonDonate->SetRepeat(0.1f, 0.5f);
                 AddEventTarget(&TeamPane::OnButtonDonate, m_pbuttonDonate->GetEventSource());
-				AddEventTarget(&TeamPane::OnRightButtonDonate, m_pbuttonDonate->GetRightEventSource());
+				
+				// BT DX7 - Removing for now.
+				//AddEventTarget(&TeamPane::OnRightButtonDonate, m_pbuttonDonate->GetRightEventSource());
             }
             
             if (m_pbuttonAutoDonate)

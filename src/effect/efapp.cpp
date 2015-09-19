@@ -45,23 +45,25 @@ IEngineFont* TrekResources::HugeBoldFont()
 
 void TrekResources::Initialize(Modeler* pmodeler)
 {
-	// Import pack files here.
-	if( g_DX9Settings.mbUseTexturePackFiles == true )
-	{
-		bool bResult;
-		CDX9PackFile * pPackFile;
+	// BT DX7 - Removing, not supported by DX7 engine.
 
-		pPackFile = new CDX9PackFile( pmodeler->GetArtPath(), "CommonTextures" );
-		bResult = pPackFile->ImportPackFile();
-		//_ASSERT( bResult == true ); Imago 8/16/09
-        if (bResult)
-            CDX9PackFile::AddToPackFileList( pPackFile );
-        else {
-            pPackFile->SetUserCancelled(true);
-            delete pPackFile;
-            pPackFile = NULL;
-        }
-	}
+	//// Import pack files here.
+	//if( g_DX9Settings.mbUseTexturePackFiles == true )
+	//{
+	//	bool bResult;
+	//	CDX9PackFile * pPackFile;
+
+	//	pPackFile = new CDX9PackFile( pmodeler->GetArtPath(), "CommonTextures" );
+	//	bResult = pPackFile->ImportPackFile();
+	//	//_ASSERT( bResult == true ); Imago 8/16/09
+ //       if (bResult)
+ //           CDX9PackFile::AddToPackFileList( pPackFile );
+ //       else {
+ //           pPackFile->SetUserCancelled(true);
+ //           delete pPackFile;
+ //           pPackFile = NULL;
+ //       }
+	//}
 
 	TRef<INameSpace> pns = pmodeler->GetNameSpace("font");
 
@@ -649,7 +651,10 @@ public:
 
 HRESULT EffectApp::Initialize(const ZString& strCommandLine, HWND hWindow )
 {
-    if( SUCCEEDED( EngineApp::Initialize( strCommandLine, hWindow ) ) ) 
+	// BT DX7 - DX7 engine doesn't take a window handle.
+    //if( SUCCEEDED( EngineApp::Initialize( strCommandLine, hWindow ) ) ) 
+	
+	if (SUCCEEDED(EngineApp::Initialize(strCommandLine)))
 	{
         TRef<INameSpace> pnsModel = GetModeler()->GetNameSpace("model");
         TRef<Number>     pnumberTime; CastTo(pnumberTime,  pnsModel->FindMember("time"));

@@ -38,7 +38,7 @@ protected:
         }
     };
 
-    class MenuCommandSink : public IMenuCommandSink,  public ISubmenuEventSink {  //Imago 10/14
+    class MenuCommandSink : public IMenuCommandSink {
     private:
         EngineWindow* m_pwindow;
 
@@ -47,14 +47,10 @@ protected:
             m_pwindow(pwindow)
         {
         }
+
         void OnMenuCommand(IMenuItem* pitem);
-		//Imago 10/14
-		void OnSubMenuCommand(IMenuItem* pitem);
-        TRef<IPopup> GetSubMenu(IMenuItem* pitem)
-        {
-            return m_pwindow->GetSubMenu(pitem);
-        }
     };
+
     friend class MenuCommandSink;
 
     //////////////////////////////////////////////////////////////////////////////
@@ -111,10 +107,7 @@ protected:
     bool                       m_bRestore;
     bool                       m_bMouseInside;
     bool                       m_bMoveOnHide;
-	bool						m_bStartFullScreen;
-	bool						m_bWindowStateMinimised;
-	bool						m_bWindowStateRestored;
-	bool						m_bClickBreak;
+	bool					   m_bStartFullScreen;
 
     int                        m_modeIndex;
 
@@ -141,12 +134,15 @@ protected:
     //
 
     TRef<IMenuCommandSink>     m_pmenuCommandSink;
-	TRef<ISubmenuEventSink>    m_psubmenuEventSink; //Imago 10/14
     TRef<IMenuItem>            m_pitemDevice;
-//    TRef<IMenuItem>            m_pitemRenderer;
+    TRef<IMenuItem>            m_pitemRenderer;
     TRef<IMenuItem>            m_pitemResolution;
     TRef<IMenuItem>            m_pitemRendering;
     TRef<IMenuItem>            m_pitemBPP; // KGJV 32B
+    TRef<IMenuItem>            m_pitemAllowSecondary;
+    TRef<IMenuItem>            m_pitemAllow3DAcceleration;
+    TRef<IMenuItem>            m_pitemHigherResolution;
+    TRef<IMenuItem>            m_pitemLowerResolution;
 
     //
     // Performance
@@ -160,10 +156,6 @@ protected:
     ZString                    m_strPerformance1;
     ZString                    m_strPerformance2;
     TRef<IEngineFont>          m_pfontFPS;
-	//Imago 10/14
-	TRef<IEngineFont>		   m_menuFont;
-	TRef<IMenu>				   m_pmenu;
-	TRef<IPopup>			   m_popup;
 
     double                     m_triangles;
     double                     m_tpf;
@@ -195,7 +187,7 @@ protected:
     void UpdateCursor();
     
     void UpdateInput();
-    void HandleMouseMessage(UINT message, const Point& point, UINT nFlags = NULL);
+    void HandleMouseMessage(UINT message, const Point& point);
 
     void ParseCommandLine(const ZString& strCommandLine, bool& bStartFullscreen);
     void DoIdle();
@@ -222,7 +214,7 @@ public:
     EngineWindow(
               EngineApp*   papp,
         const ZString&     strCommandLine,
-		const LPCSTR&     strTitle = "",
+        const ZString&     strTitle         = ZString(),
               bool         bStartFullscreen = false,
         const WinRect&     rect             = WinRect(0, 0, -1, -1),
         const WinPoint&    sizeMin          = WinPoint(1, 1),
@@ -241,8 +233,8 @@ public:
     // EngineWindow methods
     //
 
-	// Added so that we could reorganise the device creation order.
-	void			InitialiseTime();
+	// BT DX7 - Added these for DX9 engine compatibiltiy. They don't do anything in the DX7 engine.
+	void			InitialiseTime(); 
 	void			PostWindowCreationInit();
 
     Number*          GetTime()           { return m_pnumberTime;             }
@@ -257,7 +249,6 @@ public:
     bool             GetActive()         { return m_bActive;                 }
 
     TRef<IPopup> GetEngineMenu(IEngineFont* pfont);
-	TRef<IPopup> GetSubMenu(IMenuItem* pitem);
 
     RectValue* GetScreenRectValue();
     RectValue* GetRenderRectValue();
@@ -265,7 +256,8 @@ public:
     void SetFullscreen(bool bFullscreen);
     void SetSizeable(bool bSizeable);
     void SetWindowedSize(const WinPoint& point);
-    void SetFullscreenSize(const Vector& point);
+    void SetFullscreenSize(const WinPoint& point);
+	void SetFullscreenSize(const Vector& point);
     void ChangeFullscreenSize(bool bLarger);
     void Set3DAccelerationImportant(bool b3DAccelerationImportant);
     void SetMouseEnabled(bool bEnable);
